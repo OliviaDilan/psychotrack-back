@@ -1,15 +1,22 @@
 const mongoose = require("mongoose");
 
 const profileSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
+  firstname: {
+    type: String,
+    required: true,
   },
-  firstname: String,
-  surname: String,
+  surname: {
+    type: String,
+    required: true,
+  },
   age: {
     type: Number,
     default: 0,
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
   },
 });
 
@@ -18,6 +25,7 @@ function autoPopulate(next) {
   next();
 }
 
-profileSchema.pre("findOne", autoPopulate);
+profileSchema.pre('find', autoPopulate)
+profileSchema.pre('findOne', autoPopulate)
 
 module.exports = mongoose.model("Profile", profileSchema);
